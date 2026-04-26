@@ -11,6 +11,7 @@ urlpatterns = [
     path("community/upvote/<int:report_id>/", views.upvote_report, name="upvote_report"),
     path("download/", views.download, name="download"),
     path("check-email/", views.check_email, name="check_email"),
+    path("demo/phished/", views.phishing_demo, name="phishing_demo"),
     path("api/scan/", views.api_scan, name="api_scan"),
     
     # Marketplace

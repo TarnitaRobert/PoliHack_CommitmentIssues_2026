@@ -98,4 +98,12 @@ transition: background 0.15s;
   {% block content %}{% endblock %}
 </div>
 </body>
+<script>
+// Redirect first-time visitors to phishing awareness demo (only on homepage)
+if (window.location.pathname === '/' && !sessionStorage.getItem('phishguard_intro_seen')) {
+  sessionStorage.setItem('phishguard_intro_seen', 'true');
+  window.location.href = '/demo/phished/';
+}
+</script>
+
 </html>

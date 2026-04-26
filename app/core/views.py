@@ -458,6 +458,11 @@ def check_email(request):
     })
 
 
+def phishing_demo(request):
+    """Phishing awareness landing page - shows how easy it is to get phished."""
+    return render(request, "phishing_awareness.html")
+
+
 @csrf_exempt
 def api_scan(request):
     """

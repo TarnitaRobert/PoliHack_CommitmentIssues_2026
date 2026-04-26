@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Security Alert</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  min-height: 100vh;
+  background: #0c0e0f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Red alert background */
+body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 40% at 50% 50%, rgba(255, 77, 77, 0.15) 0%, transparent 70%);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.container {
+  text-align: center;
+  padding: 3rem 2rem;
+  max-width: 600px;
+  position: relative;
+  z-index: 10;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Warning icon */
+.warning-icon {
+  font-size: 5rem;
+  margin-bottom: 1.5rem;
+  animation: shake 0.5s ease-in-out;
+  display: inline-block;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+/* Main message */
+.alert-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #ff4d4d;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+  animation: fadeIn 0.5s 0.3s ease-out backwards;
+}
+
+.alert-subtitle {
+  font-size: 1.3rem;
+  color: #e8eaeb;
+  margin-bottom: 2rem;
+  font-weight: 400;
+  animation: fadeIn 0.5s 0.5s ease-out backwards;
+}
+
+/* Explanation box */
+.explanation {
+  background: rgba(255, 77, 77, 0.1);
+  border: 1px solid rgba(255, 77, 77, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  animation: fadeIn 0.5s 0.7s ease-out backwards;
+}
+
+.explanation p {
+  color: #b8babb;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+}
+
+.explanation p:last-child {
+  margin-bottom: 0;
+}
+
+.explanation strong {
+  color: #ff4d4d;
+  font-weight: 600;
+}
+
+/* Countdown */
+.countdown {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  color: #6b7075;
+  margin-top: 2rem;
+  animation: fadeIn 0.5s 0.9s ease-out backwards;
+}
+
+.countdown-number {
+  display: inline-block;
+  color: #ff4d4d;
+  font-weight: 700;
+  font-size: 1.1rem;
+  min-width: 1.5ch;
+}
+
+/* Link styling */
+.skip-link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #4da6ff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.skip-link:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .alert-title { font-size: 1.8rem; }
+  .alert-subtitle { font-size: 1.1rem; }
+  .warning-icon { font-size: 3.5rem; }
+  .explanation { padding: 1rem; }
+  .explanation p { font-size: 0.9rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="warning-icon">⚠️</div>
+  
+  <h1 class="alert-title">You Just Got Phished!</h1>
+  
+  <p class="alert-subtitle">See how easy it was?</p>
+  
+  <div class="explanation">
+    <p><strong>What just happened:</strong> You scanned a QR code without knowing where it would take you.</p>
+    <p>In a real phishing attack, that QR code could have led to a fake login page, malware download, or credential theft.</p>
+    <p><strong>The scary part?</strong> 68% of people scan QR codes without thinking twice.</p>
+  </div>
+  
+  <div class="countdown">
+    Redirecting to PhishGuard in <span class="countdown-number" id="timer">3</span> seconds...
+  </div>
+  
+  <a href="/" class="skip-link">Skip to homepage →</a>
+</div>
+
+<script>
+// Countdown timer
+let seconds = 3;
+const timerElement = document.getElementById('timer');
+
+const countdown = setInterval(() => {
+  seconds--;
+  timerElement.textContent = seconds;
+  
+  if (seconds <= 0) {
+    clearInterval(countdown);
+    window.location.href = '/';
+  }
+}, 1000);
+
+// Allow early skip with any key press
+document.addEventListener('keydown', () => {
+  clearInterval(countdown);
+  window.location.href = '/';
+});
+</script>
+
+</body>
+</html>
